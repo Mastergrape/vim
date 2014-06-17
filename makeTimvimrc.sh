@@ -36,7 +36,6 @@ git clone https://github.com/ehamberg/vim-cute-python.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/takac/vim-hardtime.git
 git clone https://github.com/osyo-manga/vim-marching.git
-git clone https://github.com/hrsh7th/vim-neco-calc.git
 git clone https://github.com/Shougo/vimproc.vim.git
 git clone https://github.com/osyo-manga/vim-reunions.git
 git clone https://github.com/tpope/vim-surround.git
