@@ -1,7 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Wed Jun 18, 2014  04:23:11 AM
+"" Last Modified : Wed Jun 18, 2014  04:42:45 PM
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -441,6 +441,10 @@ function! FoldAllBut(foldminlines)
   let save_cursor = getpos(".")
   silent! exe "%foldopen!"
   let l:_none = s:CloseBigFolds([1,0],0,g:foldminlines)
+  if (&ft=='java')
+    execute "normal ]m"
+    exec "foldopen"
+  endif
   call setpos('.', save_cursor)
 endfunction
 
