@@ -1,8 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Tue Jun 17, 2014  09:47:09 PM
-
+"" Last Modified : Wed Jun 18, 2014  04:23:11 AM
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -57,7 +56,7 @@ set scrolloff=8
 " --------------------------------------------------------------
 "  common mappings
 " --------------------------------------------------------------
-nmap <silent> <space> za " Toggle folds like a pro
+nmap <silent> <space> za
 
 " do NOT use this fucking buttons
 noremap <Up> <Nop>
@@ -67,6 +66,7 @@ noremap <Right> <Nop>
 
 " and move arround without looking like a moose
 let g:hardtime_default_on = 1
+let g:hardtime_maxcount = 5
 
 " map F1 to toggle paste because the Help can be quite annoying
 set pastetoggle=<F1>
@@ -302,6 +302,10 @@ nmap <F4> :SyntasticCheck<CR>
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 set completeopt=menuone,menu,longest
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
