@@ -1,7 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Sa Sep 17, 2016  15:26:41
+"" Last Modified : Sa Sep 17, 2016  16:01:32
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -31,6 +31,7 @@ Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
 Plug 'mhinz/vim-startify'
 Plug 'nanotech/jellybeans'
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
 call plug#end()
 
@@ -268,6 +269,7 @@ autocmd BufWritePre *.c,*.cpp,*.java,*.py,*.js :call <SID>StripWhitesFunction()
 "map python interpreter when necessary
 autocmd FileType python map <F6> :w<CR>:!python "%"<CR>
 
+autocmd FileType java setlocal omnifunc=javacomplete#Complete 
 "-----------------------------------------------------------------------------
 " Fugitive Settings
 "-----------------------------------------------------------------------------
