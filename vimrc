@@ -1,19 +1,45 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Wed Jun 18, 2014  04:42:45 PM
+"" Last Modified : Sa Sep 17, 2016  15:16:05
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
+set noesckeys
 
-"" Pathogen load plugins
-call pathogen#infect()
+"" Vim-Plug Setup
+call plug#begin('~/.vim/plugged')
+
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'mbbill/undotree', { 'on' : 'UndotreeToggle' }
+Plug 'tmhedberg/matchit'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'Shougo/neocomplete.vim' | Plug 'ujihisa/neco-look' | Plug 'eagletmt/neco-ghc' 
+Plug 'Shougo/vimproc.vim' , { 'do': 'make' } | Plug 'osyo-manga/vim-marching'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ervandew/supertab'
+Plug 'scooloose/syntastic', { 'on': 'SyntasticCheck' }
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'Shougo/unite.vim'
+Plug 'dag/vim2hs', { 'for': 'haskell' }
+Plug 'ehamberg/vim-cute-python', { 'for': 'python' }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
+Plug 'mhinz/vim-startify'
+
+call vundle#end()
 
 " ------------------------------------------------------
 " 	User Variables (while not frequently changed,
 " 	I'd rather let them stay on top)
 " ------------------------------------------------------
-let s:Author = "MY NAME"
+let s:Author = ""
+
+let g:startify_custom_header = map(split(system('fortune | cowsay'), '\n'), '" ". v:val') + ['',''] 
 
 " ------------------------------------------------------
 " 	Common Options
@@ -152,7 +178,8 @@ set t_Co=256
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
-colorscheme solarized
+"colorscheme solarized
+colorscheme jellybeans
 
 " ------------------------------------------------------
 " 	Statusline
@@ -212,14 +239,12 @@ function! MyFoldText()
 endfunction
 
 " --------------------------------------------------------------
-"  Filetype settings
 " --------------------------------------------------------------
 
-filetype on
 filetype plugin indent on
 au FileType python set foldmethod=indent
 au FileType cs set foldmethod=marker | set foldmarker={,} | set foldtext=MyFoldText()
-au FileType cpp,c,java set foldmethod=syntax | set foldtext=MyFoldText() | call FoldAllBut(10)
+"au FileType cpp,c,java set foldmethod=syntax | set foldtext=MyFoldText() | call FoldAllBut(10)
 
 " --------------------------------------------------------------
 "  Autocommands
@@ -280,7 +305,7 @@ highlight TagbarSignature ctermfg=4 guifg=#0087ff
 " Syntastic PLugin Settings
 "-----------------------------------------------------------------------------
 
-let g:syntastic_check_on_open=0
+let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
@@ -291,10 +316,21 @@ let g:syntastic_cpp_compiler_options = '-std=c++1y -stdlib=libc++'
 
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['ruby', 'php'],
-                           \ 'passive_filetypes': ['puppet','cpp'] }
+                           \ 'passive_filetypes': ['puppet','cpp','java'] }
 
 nmap <F4> :SyntasticCheck<CR>
-                                                                    
+
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
+endfunction                                                                    
+
+nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+
 "-----------------------------------------------------------------------------
 " Supertab, neocompletion Plugin Settings
 "-----------------------------------------------------------------------------
@@ -303,7 +339,6 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 set completeopt=menuone,menu,longest
 
-let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
@@ -359,45 +394,58 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
  
 let g:marching_clang_command = "/usr/bin/clang++"
 let g:marching_clang_command_option="-std=c++1y"
-let g:marching_include_paths = [  
-      \ "/usr/include/c++/4.9.0/x86_64-unknown-linux-gnu/",
-      \ "/usr/include/c++/4.9.0/",
-      \ "/usr/include/boost/"
-      \]
+"let g:marching_include_paths = [  
+      "\ "/usr/include/c++/4.9.0/x86_64-unknown-linux-gnu/",
+      "\ "/usr/include/c++/4.9.0/",
+      "\ "/usr/include/boost/"
+      "\]
+
+let g:marching_include_paths = filter(
+      \ split(glob("`find /usr/include/c++ -d`"), '\n') +
+      \ split(glob("/usr/include/boost"), '\n'),
+      \ 'isdirectory(v:val)')
 
 let g:marching_enable_neocomplete = 1
-set updatetime=200
-"
-""let g:neocomplete#force_overwrite_completefunc = 1
+
+let g:neocomplete#force_overwrite_completefunc = 1
 let g:necoghc_enable_detailed_browse = 1
 
 "-----------------------------------------------------------------------------
 " Unite Settings
 "-----------------------------------------------------------------------------
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#sorter_default#use(['sorter_rank'])
 
-nnoremap <C-P> :<C-u>Unite  -buffer-name=files   -start-insert buffer file_rec/async:!<cr>
+"search files
+nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
+"quickly change buffers
 nnoremap <Leader>b :Unite -buffer-name=buffers -quick-match buffer<cr>
+"do a fuzzy search
 nnoremap <Leader>/ :Unite grep:.<cr>
+"search recently changed files
+nnoremap <Leader>c :Unite -buffer-name=buffers -winheight=10 buffer<cr>
 
+"use ag as a file search
 "let g:unite_source_rec_async_command= 'ag --nocolor --nogroup ""'
 " Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <BS>  <Left><Del>
-endfunction
+"autocmd FileType unite call s:unite_settings()
+"function! s:unite_settings()
+"  " Play nice with supertab
+"  let b:SuperTabDisabled=1
+"  " Enable navigation with control-j and control-k in insert mode
+"  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+"  imap <buffer> <BS>  <Left><Del>
+"endfunction
 
 "-----------------------------------------------------------------------------
-" Gundo Setting
+" UndoTree Setting
 "-----------------------------------------------------------------------------
 
-nnoremap <F5> :GundoToggle<CR>
+let persistent_undo = 1
+set undodir=~/.vim/undodir/
+set undofile
+nnoremap <F5> :UndotreeToggle<CR>
 
 "-----------------------------------------------------------------------------
 " LaTex Suite Plugin Settings
