@@ -18,4 +18,4 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 echo "FINISHED"
 echo "If you want to use the ghc-mod vim plugin you have to install ghc-mod in cabal too!"
-echo "Please change Name in .vimrc and then run :PluginInstall"
+echo "[IMPORTANT] Please change Name in .vimrc and then run :PluginInstall"

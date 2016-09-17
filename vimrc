@@ -1,7 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Sa Sep 17, 2016  15:16:05
+"" Last Modified : Sa Sep 17, 2016  15:26:41
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -20,7 +20,7 @@ Plug 'Shougo/neocomplete.vim' | Plug 'ujihisa/neco-look' | Plug 'eagletmt/neco-g
 Plug 'Shougo/vimproc.vim' , { 'do': 'make' } | Plug 'osyo-manga/vim-marching'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
-Plug 'scooloose/syntastic', { 'on': 'SyntasticCheck' }
+Plug 'scrooloose/syntastic', { 'on': 'SyntasticCheck' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'Shougo/unite.vim'
 Plug 'dag/vim2hs', { 'for': 'haskell' }
@@ -30,8 +30,9 @@ Plug 'tpope/vim-surround'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
 Plug 'mhinz/vim-startify'
+Plug 'nanotech/jellybeans'
 
-call vundle#end()
+call plug#end()
 
 " ------------------------------------------------------
 " 	User Variables (while not frequently changed,
