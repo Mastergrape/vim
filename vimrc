@@ -1,7 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Sa Sep 17, 2016  16:16:38
+"" Last Modified : Sa Sep 17, 2016  16:43:08
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -15,7 +15,6 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'mbbill/undotree', { 'on' : 'UndotreeToggle' }
 Plug 'tmhedberg/matchit'
-Plug 'fholgado/minibufexpl.vim'
 Plug 'Shougo/neocomplete.vim' | Plug 'ujihisa/neco-look' | Plug 'eagletmt/neco-ghc' 
 Plug 'Shougo/vimproc.vim' , { 'do': 'make' } | Plug 'osyo-manga/vim-marching'
 Plug 'scrooloose/nerdcommenter'
@@ -91,10 +90,6 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
-
-" and move arround without looking like a moose
-let g:hardtime_default_on = 1
-let g:hardtime_maxcount = 5
 
 " map F1 to toggle paste because the Help can be quite annoying
 set pastetoggle=<F1>
