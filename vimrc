@@ -1,7 +1,7 @@
 "" Tims vimrc file.
 ""
 "" Maintainer : Tim Seyschab <tim@technuts.de>
-"" Last Modified : Sa Sep 17, 2016  16:01:32
+"" Last Modified : Sa Sep 17, 2016  16:16:38
 "" Use Vim settings, rather than Vi settings (much better!).
 "" This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -132,8 +132,8 @@ set ignorecase
 set smartcase		" Do smart case matching
 set wrapscan		" set the search scan to wrap lines
 
-"Use <C-l> to refresh screen and stop search highlight
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+"Use <C-r> to refresh screen and stop search highlight
+nnoremap <silent> <C-r> :<C-u>nohlsearch<CR><C-l>
 
 "map * and # for a better search in visual mode
 xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
